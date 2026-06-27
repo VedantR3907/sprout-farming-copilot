@@ -34,24 +34,36 @@ def _text_response(message: str) -> LlmResponse:
 def before_model_callback(
     callback_context: CallbackContext, llm_request: LlmRequest
 ) -> Optional[LlmResponse]:
-    """Redact PII in-place and short-circuit on injection attempts."""
-    blocked_reasons: list[str] = []
-    for content in getattr(llm_request, "contents", None) or []:
-        if getattr(content, "role", None) not in (None, "user"):
-            continue
+    """Redact PII in-place and short-circuit on injection attempts.
+
+    PII is redacted across all user turns (idempotent), but injection is only
+    scanned on the *latest* user message — otherwise a single past attempt would
+    permanently block an entire session.
+    """
+    contents = getattr(llm_request, "contents", None) or []
+    user_contents = [c for c in contents if getattr(c, "role", None) in (None, "user")]
+
+    # 1) PII redaction on every user turn (safe to re-run).
+    for content in user_contents:
         for part in getattr(content, "parts", None) or []:
             text = getattr(part, "text", None)
             if not text:
                 continue
-            # 1) injection scan
-            scan = policies.scan_input(text)
-            if scan.blocked:
-                blocked_reasons.extend(scan.reasons)
-            # 2) PII redaction (always)
             red = policies.redact_pii(text)
             if red.changed:
                 part.text = red.text
                 logger.info("Redacted PII: %s", red.redactions)
+
+    # 2) Injection scan only on the most recent user message.
+    blocked_reasons: list[str] = []
+    if user_contents:
+        latest = user_contents[-1]
+        latest_text = " ".join(
+            getattr(p, "text", "") or "" for p in getattr(latest, "parts", None) or []
+        )
+        scan = policies.scan_input(latest_text)
+        if scan.blocked:
+            blocked_reasons.extend(scan.reasons)
 
     if blocked_reasons:
         logger.warning("Blocked injection attempt: %s", blocked_reasons)
