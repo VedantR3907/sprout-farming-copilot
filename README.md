@@ -103,6 +103,21 @@ python -m eval.run_eval
 
 ---
 
+## 🖥️ Web UI
+
+A farmer-friendly **Gradio chat** (`app.py`) — type in any language *or upload a
+photo* of a sick plant; it shows which specialist answered and remembers your
+farm details within the session.
+
+```bash
+pip install -r requirements.txt
+cp .env.example .env        # add your free Gemini key
+python app.py              # open the printed http://127.0.0.1:7860 URL
+```
+
+Deploy it free (with a public live link) on **Hugging Face Spaces** — see
+[docs/DEPLOY.md](docs/DEPLOY.md).
+
 ## What makes this strong
 
 - **Real multi-agent delegation**, not one prompt — the root agent transfers control
@@ -128,8 +143,10 @@ sprout/
   security/             # policies (pure) + guardrails (ADK callbacks)
   mcp_server/           # FastMCP server + pure tool logic
   data/                 # schemes, market prices, disease KB, REAL crop dataset, sample leaf image
+app.py                  # 🖥️ Gradio web UI (chat + photo upload)
 demo/                   # CLI + canned scenarios + image_demo (multimodal)
 eval/                   # ADK eval suite (evalset + config + runner)
+deploy/                 # Hugging Face Spaces config
 tests/                  # 36 offline unit/structure tests (+ gated live eval)
 docs/                   # ARCHITECTURE, SUBMISSION_WRITEUP, VIDEO_SCRIPT
 notebook/               # Kaggle-ready demo notebook

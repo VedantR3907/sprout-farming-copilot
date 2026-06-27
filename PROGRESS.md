@@ -110,7 +110,17 @@ Implications:
 - Network tests are opt-in: `SPROUT_RUN_NET=1 pytest`. Default suite: **37 passed,
   3 skipped (2 net + 1 gated eval), ~3s, no key needed.**
 
-### git: committed through session 2. `.env` (with the key) is gitignored — NEVER commit it.
+### 🖥️ Web UI added (session 3)
+- `app.py` — Gradio 6 multimodal chat (text + photo upload), shows answering
+  specialist, per-session memory, friendly quota/error handling. Verified: builds,
+  launches & serves (50KB page), `respond()` handles text+image and gracefully
+  reports 429 quota. Agent flow itself verified working earlier.
+- Deployable free to Hugging Face Spaces: `deploy/README_SPACE.md` (Space YAML)
+  + `docs/DEPLOY.md` (step-by-step). Needs user's HF account + GOOGLE_API_KEY secret.
+- `gradio>=6.0` added to requirements. App is Gradio-6-specific (messages API).
+- Run locally: `python app.py`.
+
+### git: committed through session 3. `.env` (with the key) is gitignored — NEVER commit it.
 
 ## How to run (once built)
 ```bash
