@@ -22,7 +22,7 @@ DATA_DIR = PACKAGE_DIR / "data"
 MCP_SERVER_PATH = PACKAGE_DIR / "mcp_server" / "server.py"
 
 # Model — free-tier friendly Gemini default, overridable via env.
-MODEL = os.getenv("SPROUT_MODEL", "gemini-2.0-flash")
+MODEL = os.getenv("SPROUT_MODEL", "gemini-2.5-flash")
 
 # Whether a usable Gemini key is configured. Skills/MCP/security all work
 # offline; only the LLM agents need this.
