@@ -16,6 +16,13 @@ import warnings
 
 warnings.filterwarnings("ignore")
 
+# Windows consoles default to cp1252 and choke on emoji/unicode in replies.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8")  # type: ignore[union-attr]
+    except Exception:
+        pass
+
 from sprout.config import HAS_API_KEY, MODEL  # noqa: E402
 
 APP = "sprout"
