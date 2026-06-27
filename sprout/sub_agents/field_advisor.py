@@ -16,6 +16,7 @@ from mcp import StdioServerParameters
 from sprout.config import MODEL, PROJECT_ROOT
 from sprout.security.guardrails import apply_guardrails
 from sprout.skills import plan_irrigation
+from sprout.skills.farmer_profile import get_farmer_profile
 
 # Launch the custom MCP server as a subprocess and speak MCP over stdio.
 _field_tools_mcp = McpToolset(
@@ -47,8 +48,10 @@ field_advisor = apply_guardrails(
             "what to grow and can give soil nutrients/pH and climate.\n"
             "Use the `plan_irrigation` skill for watering schedules; if you have a "
             "weather forecast, pass its expected rainfall into the plan. "
+            "Use `get_farmer_profile` to reuse the farmer's known location/soil/"
+            "crops instead of asking again. "
             "Keep answers short, practical, and in plain language."
         ),
-        tools=[_field_tools_mcp, plan_irrigation],
+        tools=[_field_tools_mcp, plan_irrigation, get_farmer_profile],
     )
 )

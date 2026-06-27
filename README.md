@@ -8,7 +8,7 @@ on free infrastructure. A farmer can ask *"my tomato leaves have brown spots,"*
 *"what should I grow in my soil,"* *"what's the cotton price,"* or *"is there a loan
 scheme for seeds?"* and Sprout routes the question to the right specialist.
 
-It is built on **Google's Agent Development Kit (ADK)** and demonstrates **four** of
+It is built on **Google's Agent Development Kit (ADK)** and demonstrates **five** of
 the course's key concepts (only three are required):
 
 | # | Concept | Where it lives |
@@ -17,6 +17,12 @@ the course's key concepts (only three are required):
 | 2 | **Custom MCP server** | `sprout/mcp_server/server.py` — weather/market/soil/crop tools over stdio |
 | 3 | **Agent skills** | `sprout/skills/` — declarative, reusable capability modules |
 | 4 | **Security features** | `sprout/security/` — PII redaction, prompt-injection block, unsafe-advice filter, tool validation |
+| 5 | **Evaluation** | `eval/` — ADK eval suite (routing + MCP tool-trajectory scoring) |
+
+**Plus bonus capabilities:**
+- 📷 **Multimodal** — send a *photo* of a sick plant; `crop_doctor` (Gemini Vision) identifies the disease, then uses the `diagnose_crop` skill for remedies (`demo/image_demo.py`).
+- 🧠 **Memory** — remembers the farmer's location/soil/crops across turns via ADK **session state** (`sprout/skills/farmer_profile.py`).
+- 🌐 **Multilingual** — replies in the farmer's own language (Hindi, Marathi, Tamil, …).
 
 💸 **100% free to run:** Google ADK (open source) + Gemini free tier + the free
 [Open-Meteo](https://open-meteo.com) weather API (no key) + a **real, vendored
@@ -75,14 +81,22 @@ pip install -r requirements.txt
 # 2. (Only for the LLM agents) add a FREE Gemini key
 cp .env.example .env                   # then paste your key from https://aistudio.google.com/apikey
 
-# 3. Verify everything offline — no key needed (28 tests)
+# 3. Verify everything offline — no key needed (36 tests)
 pytest -q
 
 # 4. Try it
 python -m demo.cli --demo              # scripted end-to-end demo
 python -m demo.cli                     # interactive farmer chat
+python -m demo.image_demo              # 📷 multimodal: diagnose a leaf photo
 adk web .                              # ADK web UI, then pick "sprout"
+
+# 5. (optional) ADK evaluation suite — needs key + quota + `pip install "google-adk[eval]"`
+python -m eval.run_eval
 ```
+
+> ⚠️ **Free-tier quota:** a new Gemini key may allow only ~20 requests/day per
+> model. The offline test suite needs no key; pace your live demos accordingly or
+> use a key with higher limits.
 
 > The **skills, MCP tools, and security layer all run offline** and are fully
 > unit-tested. Only the conversational LLM agents need the (free) Gemini key.
@@ -107,15 +121,16 @@ adk web .                              # ADK web UI, then pick "sprout"
 
 ```
 sprout/
-  agent.py              # root orchestrator (root_agent)
-  config.py             # model + env config
-  sub_agents/           # crop_doctor, field_advisor, scheme_navigator
-  skills/               # diagnose_crop, plan_irrigation, find_schemes + manifests
+  agent.py              # root orchestrator (root_agent) + profile memory tools
+  config.py             # model + env config (multilingual persona)
+  sub_agents/           # crop_doctor (vision), field_advisor (MCP), scheme_navigator
+  skills/               # diagnose_crop, plan_irrigation, find_schemes, farmer_profile + manifests
   security/             # policies (pure) + guardrails (ADK callbacks)
   mcp_server/           # FastMCP server + pure tool logic
-  data/                 # schemes, market prices, disease KB, REAL crop dataset
-demo/                   # CLI + canned scenarios
-tests/                  # 28 offline unit/structure tests
+  data/                 # schemes, market prices, disease KB, REAL crop dataset, sample leaf image
+demo/                   # CLI + canned scenarios + image_demo (multimodal)
+eval/                   # ADK eval suite (evalset + config + runner)
+tests/                  # 36 offline unit/structure tests (+ gated live eval)
 docs/                   # ARCHITECTURE, SUBMISSION_WRITEUP, VIDEO_SCRIPT
 notebook/               # Kaggle-ready demo notebook
 ```

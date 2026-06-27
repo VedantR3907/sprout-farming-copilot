@@ -14,3 +14,5 @@ python-dotenv>=1.0.0
 # ---- dev / test only ----
 pytest>=8.0.0
 pytest-asyncio>=0.23.0
+# Optional: ADK evaluation extras (pandas etc.) — needed only for `python -m eval.run_eval`
+# Install with:  pip install "google-adk[eval]"
