@@ -130,8 +130,12 @@ adk web sprout                  # ADK web UI (needs key)
 ## Submission checklist (Kaggle)
 - [ ] Kaggle Writeup (use docs/SUBMISSION_WRITEUP.md)
 - [ ] Video explanation (use docs/VIDEO_SCRIPT.md)
-- [ ] Link to code (GitHub repo)
+- [x] Link to code (GitHub repo): https://github.com/VedantR3907/sprout-farming-copilot
 - [ ] Brief rationale (in writeup)
+
+> Repo pushed 2026-06-27 over SSH (user VedantR3907, branch main). `.env` is
+> gitignored and was NOT pushed — only `.env.example`. To push future changes:
+> `git push` (remote `origin` already set to the SSH URL).
 
 ## Decision log
 - 2026-06-27: Chose Sprout / Agents for Good (user picked). Deliverable = repo + notebook + writeup + video script (researched Kaggle reqs: writeup+video+code link).
