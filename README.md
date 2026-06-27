@@ -14,7 +14,7 @@ the course's key concepts (only three are required):
 | # | Concept | Where it lives |
 |---|---------|----------------|
 | 1 | **Multi-agent system (ADK)** | `sprout/agent.py` (root) + `sprout/sub_agents/` (3 specialists) |
-| 2 | **Custom MCP server** | `sprout/mcp_server/server.py` — weather/market/soil/crop tools over stdio |
+| 2 | **Custom MCP server** | `sprout/mcp_server/server.py` — live weather, **live mandi prices**, soil, real-data crop tools over stdio |
 | 3 | **Agent skills** | `sprout/skills/` — declarative, reusable capability modules |
 | 4 | **Security features** | `sprout/security/` — PII redaction, prompt-injection block, unsafe-advice filter, tool validation |
 | 5 | **Evaluation** | `eval/` — ADK eval suite (routing + MCP tool-trajectory scoring) |

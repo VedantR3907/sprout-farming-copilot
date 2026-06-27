@@ -39,6 +39,17 @@ def get_market_prices(crop: str) -> dict:
 
 
 @mcp.tool()
+def get_live_mandi_price(commodity: str, state: str = "") -> dict:
+    """Get LIVE mandi prices (INR/quintal) from data.gov.in/Agmarknet for a commodity.
+
+    Args:
+        commodity: Commodity name, e.g. "Onion", "Tomato", "Wheat".
+        state: Optional Indian state to filter by, e.g. "Maharashtra".
+    """
+    return tools.get_live_mandi_price(commodity, state)
+
+
+@mcp.tool()
 def get_soil_recommendation(crop: str, soil_type: str) -> dict:
     """Get crop+soil suitability notes and basic input guidance.
 

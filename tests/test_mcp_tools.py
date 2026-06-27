@@ -45,8 +45,37 @@ def test_weather_rejects_bad_coords():
     assert "error" in tools.get_weather_forecast(999, 0)
 
 
-@pytest.mark.skipif(os.getenv("SPROUT_SKIP_NET") == "1", reason="network disabled")
+# Live-network tests are opt-in (external APIs can be slow/flaky). Enable with:
+#   SPROUT_RUN_NET=1 pytest
+_NET = pytest.mark.skipif(
+    os.getenv("SPROUT_RUN_NET") != "1", reason="set SPROUT_RUN_NET=1 for live network tests"
+)
+
+
+@_NET
 def test_weather_live_or_graceful():
     """Live call to Open-Meteo; must either return days or a graceful error dict."""
     out = tools.get_weather_forecast(28.61, 77.20, days=2)  # New Delhi
     assert "days" in out or "error" in out
+
+
+def test_live_mandi_requires_commodity():
+    assert "error" in tools.get_live_mandi_price("")
+
+
+def test_live_mandi_falls_back_gracefully_offline(monkeypatch):
+    """If the live API errors, we must return curated data, never crash."""
+    def boom(*a, **k):
+        raise RuntimeError("simulated API outage")
+
+    monkeypatch.setattr(tools.httpx, "get", boom)
+    out = tools.get_live_mandi_price("onion")
+    assert "fallback" in out["source"] and out["modal_price"] > 0
+
+
+@_NET
+def test_live_mandi_returns_data_or_fallback():
+    """Live data.gov.in call; must return live records OR a curated fallback (never crash)."""
+    out = tools.get_live_mandi_price("Onion")
+    assert "source" in out
+    assert out.get("records_found", 0) > 0 or "modal_price" in out

@@ -26,9 +26,11 @@ and clarifying questions itself.
   `adk web .` and `adk run sprout` work out of the box.
 
 ## 3. Concept 2 — Custom MCP server
-- `sprout/mcp_server/server.py` is a **FastMCP** server exposing four tools:
+- `sprout/mcp_server/server.py` is a **FastMCP** server exposing five tools:
   - `get_weather_forecast` → live data from **Open-Meteo** (free, no key).
-  - `get_market_prices` → curated mandi price dataset with sell/hold hints.
+  - `get_live_mandi_price` → **live** mandi prices from **data.gov.in / Agmarknet**
+    (free key), with automatic fallback to curated data when the API is slow/down.
+  - `get_market_prices` → curated mandi price dataset with sell/hold hints (fallback).
   - `get_soil_recommendation` → small agronomy rules engine.
   - `recommend_crop` → **k-NN over a real 2,200-row crop dataset** (22 crops).
 - All tool *logic* lives in `sprout/mcp_server/tools.py` as pure functions, so it is
@@ -61,10 +63,13 @@ unit-tested (see `tests/test_security.py`) independent of the model.
 
 ## 6. Data sources
 - **Open-Meteo** — live weather, free, no API key.
+- **data.gov.in / Agmarknet** — live daily mandi commodity prices (free key; a public
+  sample key ships as the default, override with `DATA_GOV_API_KEY`).
 - **Crop Recommendation Dataset** (Kaggle/Hugging Face, ~2,200 records, 22 crops) —
   vendored at `sprout/data/crop_recommendation.csv` and used by `recommend_crop`.
+- **PlantVillage** — a real diseased-leaf image vendored for the multimodal demo.
 - Curated JSON knowledge bases for **government schemes**, **market prices**, and
-  **crop diseases** (PlantVillage-style taxonomy).
+  **crop diseases** (PlantVillage-style taxonomy) — also serve as offline fallbacks.
 
 ## 7. Reliability & cost
 - Network failures degrade gracefully (weather tool returns an informative error;

@@ -100,6 +100,16 @@ Implications:
 - For the demo video, pace live calls (or use a second free key / new project).
 - Offline tests need NO key and fully exercise skills/MCP/security/memory logic.
 
+### Live mandi prices added (session 2b)
+- New MCP tool `get_live_mandi_price(commodity, state)` → data.gov.in/Agmarknet
+  (free; public sample key default, override via `DATA_GOV_API_KEY`). Verified the
+  API returns real records (14k rows dated today) earlier, but it is SLOW/FLAKY and
+  was timing out later — so the tool **fails fast (12s) and falls back to curated
+  data**. Deterministic offline fallback test added (mocks an outage).
+- field_advisor now prefers live prices; MCP server exposes 5 tools.
+- Network tests are opt-in: `SPROUT_RUN_NET=1 pytest`. Default suite: **37 passed,
+  3 skipped (2 net + 1 gated eval), ~3s, no key needed.**
+
 ### git: committed through session 2. `.env` (with the key) is gitignored — NEVER commit it.
 
 ## How to run (once built)

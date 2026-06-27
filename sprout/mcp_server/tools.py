@@ -13,11 +13,21 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
+import statistics
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 import httpx
+
+# Free public sample key for data.gov.in (rate-limited). Users can set their own
+# higher-limit key via the DATA_GOV_API_KEY env var (free at https://data.gov.in).
+_DATA_GOV_KEY = os.getenv(
+    "DATA_GOV_API_KEY", "579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b"
+)
+_MANDI_RESOURCE = "9ef84268-d588-465a-a308-a864a43d0070"
+_MANDI_URL = f"https://api.data.gov.in/resource/{_MANDI_RESOURCE}"
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 
@@ -140,6 +150,75 @@ def _price_advice(info: dict) -> str:
     if trend == "volatile":
         return "Prices are volatile — sell in smaller lots to average out risk."
     return "Prices are stable — sell based on your cash-flow needs."
+
+
+def get_live_mandi_price(commodity: str, state: str = "") -> dict[str, Any]:
+    """Fetch LIVE mandi prices from data.gov.in (Agmarknet), with offline fallback.
+
+    Returns recent real market records (INR/quintal) for a commodity, optionally
+    filtered by state. If the live API is unavailable or has no record today
+    (e.g. off-season), it falls back to the curated dataset so the agent can
+    still answer.
+    """
+    commodity_key = (commodity or "").strip()
+    if not commodity_key:
+        return {"error": "Please name a commodity (e.g. wheat, onion, tomato)."}
+
+    params = {
+        "api-key": _DATA_GOV_KEY,
+        "format": "json",
+        "limit": 50,
+        "filters[commodity]": commodity_key.title(),
+    }
+    if state and state.strip():
+        params["filters[state]"] = state.strip().title()
+
+    records: list[dict] = []
+    try:
+        resp = httpx.get(_MANDI_URL, params=params, timeout=12.0)
+        resp.raise_for_status()
+        records = resp.json().get("records", [])
+        # Retry without the state filter if nothing matched in that state.
+        if not records and state:
+            params.pop("filters[state]", None)
+            resp = httpx.get(_MANDI_URL, params=params, timeout=12.0)
+            resp.raise_for_status()
+            records = resp.json().get("records", [])
+    except Exception as exc:
+        fb = get_market_prices(commodity_key)
+        fb["source"] = "curated fallback (live API unavailable)"
+        fb["detail"] = str(exc)
+        return fb
+
+    if not records:
+        fb = get_market_prices(commodity_key)
+        fb["source"] = "curated fallback (no live record today — may be off-season)"
+        return fb
+
+    modal_prices = [int(r["modal_price"]) for r in records if str(r.get("modal_price", "")).isdigit()]
+    min_prices = [int(r["min_price"]) for r in records if str(r.get("min_price", "")).isdigit()]
+    max_prices = [int(r["max_price"]) for r in records if str(r.get("max_price", "")).isdigit()]
+    sample = [
+        {
+            "market": f"{r.get('market')}, {r.get('state')}",
+            "modal_price": r.get("modal_price"),
+            "date": r.get("arrival_date"),
+        }
+        for r in records[:5]
+    ]
+    return {
+        "commodity": commodity_key,
+        "currency": "INR/quintal",
+        "records_found": len(records),
+        "as_of": records[0].get("arrival_date"),
+        "modal_price": round(statistics.median(modal_prices)) if modal_prices else None,
+        "min_price": min(min_prices) if min_prices else None,
+        "max_price": max(max_prices) if max_prices else None,
+        "sample_markets": sample,
+        "source": "data.gov.in / Agmarknet (live)",
+        "advice": "Compare nearby markets and sell where the modal price is highest, "
+        "accounting for transport cost.",
+    }
 
 
 # Minimal agronomy rules. Keys are (crop) -> preferences; soil adjustments layered on top.
