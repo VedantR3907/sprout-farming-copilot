@@ -20,11 +20,13 @@
 
 *(Open `adk web .`, show the agent graph / sub-agents.)*
 
-### 0:55–1:30 — Concept demo: Crop Doctor (skills)
-> "A farmer says: *my tomato leaves have brown spots with rings.*"
+### 0:55–1:30 — Concept demo: Crop Doctor (skills + 📷 multimodal)
+> "A farmer doesn't even need words — they can send a *photo* of the sick plant."
 
-*(Run scenario 1.)* Point out: routed to **crop_doctor**, which calls the
-**`diagnose_crop` skill**, returns Early blight with organic-first remedy + safety note.
+*(Run `python -m demo.image_demo` with the bundled real leaf photo.)* Point out:
+routed to **crop_doctor**, **Gemini Vision reads the actual image**, identifies
+**Early blight**, then calls the **`diagnose_crop` skill** for the organic-first
+remedy + auto-appended safety note. (Mention it also works from a text description.)
 
 ### 1:30–2:05 — Concept demo: Field Advisor (MCP + real data)
 > "Now: *what should I grow in my soil?*"
@@ -51,7 +53,12 @@ qualifies, and how to apply — with a warning to use only official channels."
 
 ---
 
+### (optional) Engineering credibility beat
+> "It's also evaluated and memory-aware." Show `eval/` (ADK eval suite) and mention
+> Sprout remembers the farmer's location/soil across turns and replies in their
+> language.
+
 **Recording tips**
-- Run `pytest -q` on camera once to show 28 passing tests (credibility).
+- Run `pytest -q` on camera once to show 36 passing tests (credibility).
 - Keep the terminal font large; trim long model outputs in editing.
 - Mention "free Gemini tier + Open-Meteo + open-source ADK — zero cost."

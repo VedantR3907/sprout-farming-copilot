@@ -1,0 +1,109 @@
+{
+  "eval_set_id": "sprout_routing",
+  "name": "Sprout routing + MCP tool-use",
+  "description": "Verifies root->field_advisor transfer and correct MCP tool invocation with deterministic args.",
+  "eval_cases": [
+    {
+      "eval_id": "route_market_price_cotton",
+      "conversation": [
+        {
+          "invocation_id": "m1",
+          "user_content": {
+            "parts": [
+              {
+                "text": "What is the current market price for cotton and should I sell now?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Cotton's modal price is about 7200 per quintal and trending up; holding briefly may help if storage is safe."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "args": {
+                  "agent_name": "field_advisor"
+                },
+                "name": "transfer_to_agent"
+              },
+              {
+                "args": {
+                  "crop": "cotton"
+                },
+                "name": "get_market_prices"
+              }
+            ],
+            "tool_responses": [],
+            "intermediate_responses": []
+          },
+          "creation_timestamp": 0.0
+        }
+      ],
+      "session_input": {
+        "app_name": "sprout",
+        "user_id": "farmer",
+        "state": {}
+      },
+      "creation_timestamp": 0.0,
+      "final_session_state": {}
+    },
+    {
+      "eval_id": "route_soil_rice_sandy",
+      "conversation": [
+        {
+          "invocation_id": "s1",
+          "user_content": {
+            "parts": [
+              {
+                "text": "Is rice suitable for sandy soil?"
+              }
+            ],
+            "role": "user"
+          },
+          "final_response": {
+            "parts": [
+              {
+                "text": "Rice is water-hungry while sandy soil drains fast, so drip irrigation helps; rice prefers slightly acidic soil."
+              }
+            ],
+            "role": "model"
+          },
+          "intermediate_data": {
+            "tool_uses": [
+              {
+                "args": {
+                  "agent_name": "field_advisor"
+                },
+                "name": "transfer_to_agent"
+              },
+              {
+                "args": {
+                  "crop": "rice",
+                  "soil_type": "sandy"
+                },
+                "name": "get_soil_recommendation"
+              }
+            ],
+            "tool_responses": [],
+            "intermediate_responses": []
+          },
+          "creation_timestamp": 0.0
+        }
+      ],
+      "session_input": {
+        "app_name": "sprout",
+        "user_id": "farmer",
+        "state": {}
+      },
+      "creation_timestamp": 0.0,
+      "final_session_state": {}
+    }
+  ],
+  "creation_timestamp": 0.0
+}

@@ -72,7 +72,28 @@ unit-tested (see `tests/test_security.py`) independent of the model.
 - 28 offline tests run with no API key; the only paid-tier-optional piece is the
   Gemini model, used on its free tier.
 
-## 8. Extending Sprout
+## 8. Concept 5 — Evaluation (ADK eval)
+`eval/` contains an ADK `EvalSet` (`sprout.evalset.json`), pass/fail criteria
+(`test_config.json`), and a runner (`run_eval.py`). It scores
+**`tool_trajectory_avg_score`** (did the root transfer to `field_advisor` and call
+the right **MCP** tool?) and **`response_match_score`**. Trajectory cases use
+deterministic tool args (e.g. `get_market_prices(crop="cotton")`); free-text-arg
+routing (crop_doctor/scheme_navigator) is covered by unit tests + the live demo.
+A gated `tests/test_eval.py` (`RUN_ADK_EVAL=1`) runs it in CI when a key is present.
+
+## 9. Bonus capabilities
+- **Multimodal vision** — `crop_doctor` is a Gemini model and reads image parts.
+  `demo/image_demo.py` sends a real PlantVillage leaf photo; the agent describes
+  what it sees, then calls `diagnose_crop` for remedies. No extra dependency — the
+  image is passed as a `types.Part.from_bytes(...)` in the user message.
+- **Session-state memory** — `sprout/skills/farmer_profile.py` exposes
+  `save_farmer_profile` / `get_farmer_profile` which read/write
+  `tool_context.state`. ADK persists this for the session, so the farmer's
+  location/soil/crops are remembered across turns and reused by `field_advisor`.
+- **Multilingual** — the shared persona instructs every agent to reply in the
+  farmer's own language, making Sprout usable by non-English speakers.
+
+## 10. Extending Sprout
 - Add a tool: implement a pure function in `mcp_server/tools.py`, expose it with
   `@mcp.tool()` in `server.py`.
 - Add a skill: drop a pure function in `skills/`, register an `AgentSkill` in

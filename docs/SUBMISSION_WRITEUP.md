@@ -23,17 +23,27 @@ understands the farmer's question and hands it to the right specialist:
 - **Scheme Navigator** — finds relevant government schemes (income, credit,
   insurance, irrigation, organic, market) with eligibility and how to apply.
 
-## 3. Key concepts demonstrated (4 of the required 3+)
+## 3. Key concepts demonstrated (5 of the required 3+)
 1. **Multi-agent system with Google ADK** — a root orchestrator delegates to three
    specialist `LlmAgent`s via ADK's `sub_agents` transfer mechanism.
 2. **Custom MCP server** — a FastMCP server exposes four agronomy tools over stdio,
    consumed by ADK's `McpToolset`. One tool calls the **live Open-Meteo API**;
    another runs **k-NN over a real 2,200-row crop dataset**.
-3. **Agent skills** — three reusable, declaratively-described (`AgentSkill`)
-   capability modules: `diagnose_crop`, `plan_irrigation`, `find_schemes`.
+3. **Agent skills** — reusable, declaratively-described (`AgentSkill`) capability
+   modules: `diagnose_crop`, `plan_irrigation`, `find_schemes`.
 4. **Security features** — ADK callbacks on every agent: PII redaction,
    prompt-injection/jailbreak blocking, unsafe-advice filtering, and tool-argument
    validation.
+5. **Evaluation** — an ADK eval suite (`eval/`) scores routing + MCP tool-trajectory
+   on deterministic cases.
+
+**Bonus capabilities:**
+- **Multimodal vision** — a farmer can send a *photo* of a diseased leaf;
+  `crop_doctor` (Gemini Vision) reads it, identifies the problem, and fetches
+  remedies via the `diagnose_crop` skill. Demoed on a real PlantVillage leaf image.
+- **Session-state memory** — remembers the farmer's location, soil, and crops across
+  turns so they never repeat themselves.
+- **Multilingual** — answers in the farmer's own language for true accessibility.
 
 ## 4. Why it stands out
 - **Real data, not toy data**: a vendored Kaggle/Hugging Face crop dataset (22
@@ -42,7 +52,10 @@ understands the farmer's question and hands it to the right specialist:
   (phone, Aadhaar, email) never reaches the model, and dangerous chemical advice is
   blocked with a safety note enforced.
 - **Engineering quality**: clean separation of pure logic vs. framework plumbing, a
-  reusable MCP server, and **28 deterministic offline tests** that run with no API key.
+  reusable MCP server, an ADK eval suite, and **36 deterministic offline tests** that
+  run with no API key.
+- **Accessible & inclusive**: multimodal (photo) input, multilingual replies, and
+  memory so low-literacy farmers can use it naturally.
 - **Genuinely free & reproducible**: open-source ADK, Gemini free tier, no paid APIs.
 
 ## 5. Responsible AI
@@ -54,13 +67,13 @@ itself as a helper, not a replacement for local extension officers.
 ## 6. How to run / reproduce
 - Code: `<your GitHub repo link>`
 - `pip install -r requirements.txt`, add a free Gemini key to `.env`, then
-  `python -m demo.cli --demo` or `adk web .`.
-- Offline verification: `pytest -q` (28 passing).
+  `python -m demo.cli --demo`, `python -m demo.image_demo` (photo), or `adk web .`.
+- Offline verification: `pytest -q` (36 passing, no key needed).
 
 ## 7. Tech stack
 Google ADK · Gemini (free tier) · Model Context Protocol (FastMCP) · Open-Meteo ·
 Python 3.12 · pytest.
 
 ## 8. Future work
-Add image-based disease detection (PlantVillage CNN), local-language voice I/O,
-WhatsApp/IVR delivery, and a live mandi-price + scheme feed.
+Add local-language **voice** I/O, WhatsApp/IVR delivery, a live mandi-price feed
+(data.gov.in / e-NAM), and a fine-tuned on-device leaf-disease model for offline use.

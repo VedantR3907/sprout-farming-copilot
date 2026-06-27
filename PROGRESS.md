@@ -72,6 +72,36 @@ from mcp import StdioServerParameters
 Everything deterministic/offline IS tested. The LLM call path is standard ADK
 (`InMemoryRunner.run_async`) and imports cleanly; it just needs the key to execute.
 
+## 🔁 SESSION 2 (2026-06-27) — regression testing + enhancements (key provided)
+**Live multi-agent flow VERIFIED working** with the user's Gemini key:
+- Disease→crop_doctor (Early blight), recommend_crop→field_advisor (real-data MCP), scheme→scheme_navigator (KCC), injection blocked, PII redacted. ✅
+- 📷 Multimodal VERIFIED: sent a real PlantVillage leaf photo → crop_doctor (Gemini Vision) correctly diagnosed Early blight + remedies. ✅
+
+**Bug found via regression + FIXED:** input guardrail scanned the WHOLE history for
+injection, so one past injection permanently blocked a session. Now scans only the
+latest user message (`sprout/security/guardrails.py`). Added 4 regression tests.
+
+**Enhancements added (project now demonstrates 5 concepts + 3 bonuses):**
+- Concept 5: ADK **evaluation** suite (`eval/`: evalset + config + runner + gated test).
+- 📷 Multimodal leaf-photo diagnosis (`demo/image_demo.py`, sample image vendored).
+- 🧠 Session-state **memory** (`sprout/skills/farmer_profile.py`, wired into root + field_advisor).
+- 🌐 **Multilingual** replies (persona in `config.py`).
+- Default model switched to `gemini-2.5-flash` (2.0-flash quota was exhausted).
+
+**Tests now: 36 passing, 1 skipped (gated live eval). `pytest -q`.**
+
+### ⚠️ IMPORTANT quota finding (tell the user):
+The provided Gemini free-tier key allows only **~20 requests/day PER MODEL**
+(both gemini-2.5-flash and -flash-lite hit `RESOURCE_EXHAUSTED` after testing).
+Implications:
+- The ADK eval suite (`eval/run_eval.py`) is built + the harness verified to run +
+  the market-price routing case passed trajectory, but a FULL green eval run needs
+  a fresh daily quota or a higher-limit key. Re-run `python -m eval.run_eval` tomorrow.
+- For the demo video, pace live calls (or use a second free key / new project).
+- Offline tests need NO key and fully exercise skills/MCP/security/memory logic.
+
+### git: committed through session 2. `.env` (with the key) is gitignored — NEVER commit it.
+
 ## How to run (once built)
 ```bash
 python -m venv .venv && source .venv/Scripts/activate   # Windows Git Bash
