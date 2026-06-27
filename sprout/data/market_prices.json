@@ -1,0 +1,21 @@
+{
+  "_note": "Illustrative recent modal mandi prices in INR per quintal (100 kg). Representative figures for demo/offline use; a production build would call a live mandi/e-NAM feed. Ranges reflect typical seasonal spread.",
+  "currency": "INR/quintal",
+  "as_of": "2026-06",
+  "crops": {
+    "wheat": {"modal": 2400, "min": 2150, "max": 2700, "trend": "stable"},
+    "rice": {"modal": 2300, "min": 2050, "max": 2900, "trend": "rising"},
+    "paddy": {"modal": 2200, "min": 1950, "max": 2600, "trend": "stable"},
+    "maize": {"modal": 2050, "min": 1800, "max": 2300, "trend": "rising"},
+    "cotton": {"modal": 7200, "min": 6600, "max": 8100, "trend": "rising"},
+    "soybean": {"modal": 4600, "min": 4200, "max": 5200, "trend": "falling"},
+    "tomato": {"modal": 1800, "min": 600, "max": 4500, "trend": "volatile"},
+    "onion": {"modal": 1600, "min": 800, "max": 3500, "trend": "volatile"},
+    "potato": {"modal": 1300, "min": 700, "max": 2200, "trend": "stable"},
+    "sugarcane": {"modal": 340, "min": 300, "max": 400, "trend": "stable"},
+    "groundnut": {"modal": 6300, "min": 5800, "max": 7000, "trend": "stable"},
+    "mustard": {"modal": 5500, "min": 5000, "max": 6200, "trend": "rising"},
+    "chickpea": {"modal": 5400, "min": 4900, "max": 6100, "trend": "stable"},
+    "banana": {"modal": 1900, "min": 1200, "max": 2800, "trend": "stable"}
+  }
+}
