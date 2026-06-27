@@ -1,0 +1,125 @@
+{
+  "_note": "Common crop diseases/pests keyed for symptom matching. Disease names follow the PlantVillage taxonomy used in agricultural ML datasets. Remedies are general guidance — always follow local extension advice and product labels.",
+  "diseases": [
+    {
+      "crop": "tomato",
+      "name": "Early blight (Alternaria solani)",
+      "symptoms": ["dark spots", "concentric rings", "brown spots", "lower leaves", "yellowing leaves", "target spots"],
+      "organic": "Remove affected leaves; spray neem oil or a copper-based fungicide; mulch to prevent soil splash.",
+      "chemical": "Mancozeb or chlorothalonil per label intervals.",
+      "prevention": "Rotate crops, stake plants for airflow, water at the base not on leaves."
+    },
+    {
+      "crop": "tomato",
+      "name": "Late blight (Phytophthora infestans)",
+      "symptoms": ["water-soaked spots", "white mold", "rapid wilting", "dark blotches", "stem lesions", "humid"],
+      "organic": "Remove and destroy infected plants immediately; copper spray as protectant.",
+      "chemical": "Cymoxanil + mancozeb; act fast — spreads in cool, wet weather.",
+      "prevention": "Avoid overhead irrigation; ensure spacing; plant resistant varieties."
+    },
+    {
+      "crop": "tomato",
+      "name": "Tomato Yellow Leaf Curl Virus (whitefly-borne)",
+      "symptoms": ["curling leaves", "yellow margins", "stunted growth", "whiteflies", "upward curling"],
+      "organic": "Control whiteflies with yellow sticky traps and neem; remove infected plants.",
+      "chemical": "Insecticides targeting whitefly vector (e.g., imidacloprid) per label.",
+      "prevention": "Use virus-free seedlings, insect-proof nets, reflective mulch."
+    },
+    {
+      "crop": "potato",
+      "name": "Late blight (Phytophthora infestans)",
+      "symptoms": ["dark water-soaked spots", "white mold", "rotting tubers", "rapid spread", "humid"],
+      "organic": "Remove infected foliage; copper-based protectant sprays.",
+      "chemical": "Metalaxyl + mancozeb; preventive sprays in cool wet spells.",
+      "prevention": "Plant certified seed, hill soil over tubers, ensure drainage."
+    },
+    {
+      "crop": "potato",
+      "name": "Early blight (Alternaria solani)",
+      "symptoms": ["concentric rings", "brown spots", "target spots", "older leaves", "yellowing"],
+      "organic": "Neem or copper fungicide; remove debris.",
+      "chemical": "Chlorothalonil or mancozeb per label.",
+      "prevention": "Crop rotation, balanced nitrogen, good spacing."
+    },
+    {
+      "crop": "rice",
+      "name": "Rice blast (Magnaporthe oryzae)",
+      "symptoms": ["diamond-shaped lesions", "gray center", "brown border", "neck rot", "leaf spots"],
+      "organic": "Balanced nitrogen, silica amendments; avoid excess N.",
+      "chemical": "Tricyclazole at early symptoms per label.",
+      "prevention": "Resistant varieties, avoid dense planting, manage water."
+    },
+    {
+      "crop": "rice",
+      "name": "Bacterial leaf blight (Xanthomonas oryzae)",
+      "symptoms": ["yellow stripes", "wavy leaf margins", "drying tips", "water-soaked streaks", "wilting"],
+      "organic": "Drain field periodically; balanced fertilization; copper sprays.",
+      "chemical": "Copper-based bactericides; antibiotics are discouraged/restricted.",
+      "prevention": "Use resistant varieties, clean seed, avoid leaf injury."
+    },
+    {
+      "crop": "rice",
+      "name": "Brown spot (Bipolaris oryzae)",
+      "symptoms": ["small brown spots", "oval lesions", "poor soil", "nutrient deficiency"],
+      "organic": "Correct potassium/micronutrient deficiency; use compost.",
+      "chemical": "Mancozeb if severe.",
+      "prevention": "Improve soil fertility, use healthy seed."
+    },
+    {
+      "crop": "maize",
+      "name": "Common rust (Puccinia sorghi)",
+      "symptoms": ["reddish-brown pustules", "powdery spots", "both leaf surfaces", "orange powder"],
+      "organic": "Remove heavily infected leaves; ensure airflow.",
+      "chemical": "Triazole fungicide if severe and early.",
+      "prevention": "Resistant hybrids, avoid late planting."
+    },
+    {
+      "crop": "maize",
+      "name": "Northern leaf blight (Exserohilum turcicum)",
+      "symptoms": ["long gray-green lesions", "cigar-shaped lesions", "drying leaves"],
+      "organic": "Crop rotation and residue management.",
+      "chemical": "Fungicide at early onset for susceptible hybrids.",
+      "prevention": "Resistant hybrids, rotate with non-host crops."
+    },
+    {
+      "crop": "wheat",
+      "name": "Leaf rust (Puccinia triticina)",
+      "symptoms": ["orange-brown pustules", "small round spots", "upper leaf surface", "rusty powder"],
+      "organic": "Early sowing of resistant varieties.",
+      "chemical": "Propiconazole at first signs per label.",
+      "prevention": "Resistant varieties, monitor during humid spring."
+    },
+    {
+      "crop": "cotton",
+      "name": "Bollworm (Helicoverpa) infestation",
+      "symptoms": ["holes in bolls", "damaged buds", "caterpillars", "frass", "boll drop"],
+      "organic": "Pheromone traps, Bt sprays, hand-pick larvae, encourage natural predators.",
+      "chemical": "Use recommended insecticides in rotation to avoid resistance; follow label.",
+      "prevention": "Bt cotton varieties, intercropping, regular scouting."
+    },
+    {
+      "crop": "any",
+      "name": "Aphid infestation",
+      "symptoms": ["sticky leaves", "curling new growth", "tiny insects", "honeydew", "sooty mold", "ants"],
+      "organic": "Spray neem oil or insecticidal soap; release ladybirds; strong water jet.",
+      "chemical": "Systemic insecticide only if severe, per label.",
+      "prevention": "Avoid excess nitrogen, encourage beneficial insects."
+    },
+    {
+      "crop": "any",
+      "name": "Powdery mildew",
+      "symptoms": ["white powder", "white coating", "leaves", "dry weather", "stunted growth"],
+      "organic": "Spray potassium bicarbonate or diluted milk solution; improve airflow.",
+      "chemical": "Sulfur or triazole fungicide per label.",
+      "prevention": "Resistant varieties, proper spacing, avoid water stress."
+    },
+    {
+      "crop": "any",
+      "name": "Nutrient deficiency (general)",
+      "symptoms": ["yellowing", "pale leaves", "poor growth", "stunted", "discoloration", "no pests visible"],
+      "organic": "Apply compost/FYM; get a soil test; correct specific nutrient.",
+      "chemical": "Balanced NPK or targeted fertilizer based on soil test.",
+      "prevention": "Regular soil testing, organic matter, crop rotation."
+    }
+  ]
+}

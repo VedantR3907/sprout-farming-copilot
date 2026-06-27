@@ -1,0 +1,68 @@
+{
+  "_note": "Curated, illustrative summaries of well-known government agricultural support schemes (India-focused). For a real deployment these would be refreshed from official portals. Always verify on the official site before acting.",
+  "schemes": [
+    {
+      "id": "pm-kisan",
+      "name": "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)",
+      "benefit": "Income support of ₹6,000/year paid in three equal installments directly to bank accounts.",
+      "who": "Landholding farmer families (subject to exclusion criteria).",
+      "tags": ["income", "subsidy", "all-crops", "smallholder"],
+      "how": "Register at the PM-KISAN portal or via your local Common Service Centre with Aadhaar, land records, and bank details.",
+      "official": "https://pmkisan.gov.in"
+    },
+    {
+      "id": "pmfby",
+      "name": "PMFBY (Pradhan Mantri Fasal Bima Yojana)",
+      "benefit": "Crop insurance against yield loss from drought, flood, pests, and disease at low farmer premiums (2% Kharif, 1.5% Rabi).",
+      "who": "Farmers growing notified crops, including sharecroppers and tenant farmers.",
+      "tags": ["insurance", "risk", "drought", "flood", "pest", "all-crops"],
+      "how": "Enroll through banks, insurance intermediaries, or the national crop insurance portal before the cut-off date for the season.",
+      "official": "https://pmfby.gov.in"
+    },
+    {
+      "id": "soil-health-card",
+      "name": "Soil Health Card Scheme",
+      "benefit": "Free soil testing and a card with crop-wise nutrient and fertilizer recommendations every 2-3 years.",
+      "who": "All farmers.",
+      "tags": ["soil", "fertilizer", "nutrients", "all-crops", "sustainability"],
+      "how": "Request through your local agriculture office or soil testing lab; samples are collected and analysed.",
+      "official": "https://soilhealth.dac.gov.in"
+    },
+    {
+      "id": "kcc",
+      "name": "Kisan Credit Card (KCC)",
+      "benefit": "Short-term crop loans at subsidised interest (effective ~4% with prompt repayment), plus working capital for allied activities.",
+      "who": "Farmers, tenant farmers, and sharecroppers.",
+      "tags": ["credit", "loan", "finance", "working-capital", "smallholder"],
+      "how": "Apply at any bank branch with identity, address, and land documents.",
+      "official": "https://www.myscheme.gov.in"
+    },
+    {
+      "id": "pkvy",
+      "name": "PKVY (Paramparagat Krishi Vikas Yojana)",
+      "benefit": "Financial assistance for adopting organic farming in clusters, including certification and marketing support.",
+      "who": "Groups of farmers forming organic clusters.",
+      "tags": ["organic", "sustainability", "certification", "subsidy"],
+      "how": "Join or form a cluster via the state agriculture department.",
+      "official": "https://pgsindia-ncof.gov.in"
+    },
+    {
+      "id": "pmksy",
+      "name": "PMKSY (Pradhan Mantri Krishi Sinchayee Yojana)",
+      "benefit": "Subsidies for micro-irrigation (drip and sprinkler) to improve water-use efficiency: 'more crop per drop'.",
+      "who": "Farmers investing in water-saving irrigation.",
+      "tags": ["irrigation", "water", "drip", "sprinkler", "subsidy", "drought"],
+      "how": "Apply via the state horticulture/agriculture department or the micro-irrigation portal.",
+      "official": "https://pmksy.gov.in"
+    },
+    {
+      "id": "enam",
+      "name": "e-NAM (National Agriculture Market)",
+      "benefit": "Online trading platform connecting mandis so farmers get transparent, competitive prices for produce.",
+      "who": "Farmers and traders registered at participating mandis.",
+      "tags": ["market", "prices", "selling", "trade"],
+      "how": "Register at a participating mandi or on the e-NAM portal.",
+      "official": "https://www.enam.gov.in"
+    }
+  ]
+}
