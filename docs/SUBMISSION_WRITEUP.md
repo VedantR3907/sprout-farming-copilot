@@ -26,9 +26,10 @@ understands the farmer's question and hands it to the right specialist:
 ## 3. Key concepts demonstrated (5 of the required 3+)
 1. **Multi-agent system with Google ADK** — a root orchestrator delegates to three
    specialist `LlmAgent`s via ADK's `sub_agents` transfer mechanism.
-2. **Custom MCP server** — a FastMCP server exposes four agronomy tools over stdio,
-   consumed by ADK's `McpToolset`. One tool calls the **live Open-Meteo API**;
-   another runs **k-NN over a real 2,200-row crop dataset**.
+2. **Custom MCP server** — a FastMCP server exposes five agronomy tools over stdio,
+   consumed by ADK's `McpToolset`. Tools call the **live Open-Meteo API** and the
+   **live data.gov.in/Agmarknet mandi-price API**, and one runs **k-NN over a real
+   2,200-row crop dataset** — all with graceful offline fallbacks.
 3. **Agent skills** — reusable, declaratively-described (`AgentSkill`) capability
    modules: `diagnose_crop`, `plan_irrigation`, `find_schemes`.
 4. **Security features** — ADK callbacks on every agent: PII redaction,
