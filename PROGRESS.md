@@ -50,7 +50,27 @@ from mcp import StdioServerParameters
 - [x] Task 3: Agent skills package
 - [x] Task 4: Security guardrails
 - [x] Task 5: Multi-agent ADK wiring
-- [ ] Task 6: Tests, demo CLI, notebook, docs, writeup, video script (IN PROGRESS)
+- [x] Task 6: Tests, demo CLI, notebook, docs, writeup, video script
+
+## ✅ BUILD COMPLETE (2026-06-27)
+- 28/28 offline tests passing (`pytest -q`) — no API key required.
+- MCP server verified end-to-end over stdio (4 tools: weather/market/soil/recommend_crop).
+- Agent tree builds: root `sprout` + 3 sub-agents, guardrails on all, MCP toolset attached.
+- Real dataset vendored: `sprout/data/crop_recommendation.csv` (2,200 rows, 22 crops).
+- Kaggle notebook generated & validated: `notebook/sprout_capstone.ipynb` (19 cells).
+- Docs done: README, ARCHITECTURE, SUBMISSION_WRITEUP, VIDEO_SCRIPT.
+- git initialized + committed locally.
+- google-adk 2.3.0, mcp installed in the system Python.
+
+### ONLY remaining (needs the user — cannot be done without their key/accounts):
+1. Paste a free Gemini key into `.env`, then run `python -m demo.cli --demo` to see live LLM replies.
+2. Create a GitHub repo and `git remote add origin … && git push` (for the Kaggle "code link").
+3. Record the ~3-min video using `docs/VIDEO_SCRIPT.md`.
+4. Submit the Kaggle Writeup using `docs/SUBMISSION_WRITEUP.md`.
+
+### Verified-untested path: live LLM conversation (no key available to this build agent).
+Everything deterministic/offline IS tested. The LLM call path is standard ADK
+(`InMemoryRunner.run_async`) and imports cleanly; it just needs the key to execute.
 
 ## How to run (once built)
 ```bash
