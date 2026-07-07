@@ -1,4 +1,4 @@
-"""Behind-the-scenes agent TRACE — great for the demo video.
+"""Behind-the-scenes agent trace — shows routing, tool calls, and token usage.
 
 Runs one farmer query through the multi-agent system and prints a clean,
 readable trace of what happens inside:

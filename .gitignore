@@ -13,3 +13,10 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# Internal working notes (not for the public repo)
+PROGRESS.md
+docs/TELEPROMPTER.md
+docs/VIDEO_SCRIPT.md
+image.png
+sprout_cover_image.png

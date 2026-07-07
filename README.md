@@ -180,7 +180,7 @@ demo/                   # CLI + canned scenarios + image_demo (multimodal)
 eval/                   # ADK eval suite (evalset + config + runner)
 deploy/                 # Hugging Face Spaces config
 tests/                  # 36 offline unit/structure tests (+ gated live eval)
-docs/                   # ARCHITECTURE, SUBMISSION_WRITEUP, VIDEO_SCRIPT
+docs/                   # ARCHITECTURE, DEPLOY + architecture diagram
 notebook/               # Kaggle-ready demo notebook
 ```
 

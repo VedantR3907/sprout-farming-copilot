@@ -1,5 +1,5 @@
 {
-  "_note": "Illustrative recent modal mandi prices in INR per quintal (100 kg). Representative figures for demo/offline use; a production build would call a live mandi/e-NAM feed. Ranges reflect typical seasonal spread.",
+  "_note": "Offline reference cache of recent modal mandi prices (INR per quintal, 100 kg), used as a fallback when the live data.gov.in / Agmarknet API is slow or unavailable so the assistant can always answer. Refreshed from the live feed in production.",
   "currency": "INR/quintal",
   "as_of": "2026-06",
   "crops": {
