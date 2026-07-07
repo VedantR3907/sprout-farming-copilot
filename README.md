@@ -2,6 +2,8 @@
 
 > **Kaggle "AI Agents: Intensive Vibe Coding" Capstone — Track: Agents for Good**
 
+**🎥 [Watch the demo video](https://www.youtube.com/watch?v=Oma8CFKMMUw)** &nbsp;·&nbsp; **🖥️ Run the web UI:** `python app.py`
+
 Sprout is a **multi-agent system** that puts an agronomist, a market analyst, and a
 government-scheme advisor in every smallholder farmer's pocket — in plain language,
 on free infrastructure. A farmer can ask *"my tomato leaves have brown spots,"*
