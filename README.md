@@ -33,6 +33,36 @@ the course's key concepts (only three are required):
 
 ## Architecture
 
+**4 agents total:** 1 root orchestrator + 3 specialists. Security wraps every agent;
+the Field Advisor talks to a custom MCP server backed by live + real data.
+
+```mermaid
+flowchart TD
+    F["👩‍🌾 Farmer — text or 📷 photo · any language"]
+    SEC["🛡️ Security guardrails on EVERY agent<br/>PII redaction · injection block · unsafe-advice filter · tool validation"]
+    ROOT["🧭 Root Orchestrator 'sprout'<br/>Gemini 2.5 Flash · routes + remembers profile"]
+    CD["🌿 Crop Doctor<br/>diagnose_crop skill · 📷 Gemini Vision"]
+    FA["🌦️ Field Advisor<br/>MCP tools + plan_irrigation skill"]
+    SN["🏛️ Scheme Navigator<br/>find_schemes skill"]
+    MCP["🔌 Custom MCP Server (stdio) · 5 tools<br/>weather · live mandi · market · soil · recommend_crop"]
+    D1["🟢 LIVE · Open-Meteo weather"]
+    D2["🟢 LIVE · data.gov.in / Agmarknet"]
+    D3["📊 REAL · crop dataset 2,200 rows"]
+    F --> SEC --> ROOT
+    ROOT -->|transfer| CD
+    ROOT -->|transfer| FA
+    ROOT -->|transfer| SN
+    FA --> MCP
+    MCP --> D1
+    MCP --> D2
+    MCP --> D3
+```
+
+> 🖼️ A polished, screenshot-ready version for slides/video is in
+> [`docs/architecture.html`](docs/architecture.html) — open it in a browser.
+
+<details><summary>Plain-text version</summary>
+
 ```
                         👩‍🌾 Farmer
                            │
@@ -65,6 +95,7 @@ the course's key concepts (only three are required):
                     │  + plan_irrigation│ (skill)
                     └──────────────────┘
 ```
+</details>
 
 See **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** for the deep dive.
 
@@ -88,6 +119,7 @@ pytest -q
 python -m demo.cli --demo              # scripted end-to-end demo
 python -m demo.cli                     # interactive farmer chat
 python -m demo.image_demo              # 📷 multimodal: diagnose a leaf photo
+python -m demo.trace                   # 🔍 behind-the-scenes trace: routing + tool calls + token cost
 adk web .                              # ADK web UI, then pick "sprout"
 
 # 5. (optional) ADK evaluation suite — needs key + quota + `pip install "google-adk[eval]"`

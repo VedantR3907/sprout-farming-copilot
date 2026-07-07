@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sprout — Multi-Agent Architecture</title>
+<style>
+  :root{
+    --bg:#0f1912; --panel:#16241a; --ink:#e8f3ea; --muted:#a9c3b0;
+    --root:#2e7d32; --doctor:#3d8b40; --field:#2f6fb0; --scheme:#8a6d1f;
+    --mcp:#124b3c; --sec:#7a2e2e; --data:#1d3a2a; --line:#4b6b56;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(160deg,#0c140f,#12211a);color:var(--ink);
+       font:16px/1.45 "Segoe UI",system-ui,sans-serif;padding:28px}
+  .wrap{max-width:1060px;margin:0 auto}
+  h1{margin:0 0 2px;font-size:30px}
+  h1 .leaf{filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+  .sub{color:var(--muted);margin:0 0 20px;font-size:15px}
+  .card{border-radius:14px;padding:14px 16px;border:1px solid rgba(255,255,255,.08);
+        box-shadow:0 6px 18px rgba(0,0,0,.25)}
+  .center{text-align:center}
+  .row{display:flex;gap:16px;justify-content:center;align-items:stretch;margin:14px 0}
+  .farmer{background:#20331f;max-width:520px;margin:0 auto;text-align:center;font-weight:600}
+  .sec{background:linear-gradient(90deg,#5e2626,#7a2e2e);border-color:#a24a4a}
+  .sec b{color:#ffd9d9}
+  .sec small{color:#f4c9c9}
+  .root{background:linear-gradient(90deg,#245a27,#2e7d32);max-width:560px;margin:0 auto;text-align:center}
+  .agents{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .agent{background:var(--panel)}
+  .agent h3{margin:0 0 4px;font-size:17px}
+  .agent .role{color:var(--muted);font-size:13px;margin-bottom:8px;min-height:34px}
+  .tools{list-style:none;margin:0;padding:0;font-size:13px}
+  .tools li{background:#0e1a13;border:1px solid rgba(255,255,255,.06);border-radius:8px;
+            padding:5px 8px;margin:5px 0}
+  .tag{display:inline-block;font-size:11px;padding:2px 7px;border-radius:20px;
+       background:#0e1a13;border:1px solid var(--line);color:var(--muted);margin-top:6px}
+  .doctor h3{color:#8fe08f}.field h3{color:#8ec5f0}.scheme h3{color:#e6c766}
+  .mcp{background:linear-gradient(90deg,#0f3d31,#124b3c);border-color:#1c6b56}
+  .mcp .grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
+  .mcp .grid div{background:#0b2b23;border:1px solid #1c6b56;border-radius:8px;padding:6px;font-size:12px;text-align:center}
+  .data{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+  .data .card{background:var(--data);text-align:center;font-size:12.5px}
+  .data .live{color:#8fe08f;font-weight:700}
+  .arrow{text-align:center;color:var(--line);font-size:22px;line-height:1;margin:-4px 0}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:18px;color:var(--muted);font-size:12.5px}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .foot{text-align:center;color:var(--muted);font-size:12px;margin-top:14px}
+  b{color:#fff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1><span class="leaf">🌱</span> Sprout — Multi-Agent Architecture</h1>
+  <p class="sub">AI Farming Co-pilot · Google ADK · <b>1 orchestrator + 3 specialist agents</b> · custom MCP server · Gemini 2.5 Flash (free tier)</p>
+
+  <div class="card farmer">👩‍🌾 Farmer &nbsp;—&nbsp; asks in any language, or uploads a 📷 plant photo</div>
+  <div class="arrow">▼</div>
+
+  <div class="card sec">
+    <b>🛡️ SECURITY GUARDRAILS</b> — wrap <b>every</b> agent (ADK callbacks)<br/>
+    <small>before_model: redact PII + block prompt-injection &nbsp;·&nbsp; after_model: block unsafe advice + add safety note &nbsp;·&nbsp; before_tool: validate arguments</small>
+  </div>
+  <div class="arrow">▼</div>
+
+  <div class="card root">
+    <b>🧭 ROOT ORCHESTRATOR — “sprout”</b><br/>
+    <small>understands the farmer, remembers profile (session state), delegates to a specialist</small>
+  </div>
+  <div class="arrow">▼ &nbsp; transfers to one of three specialists &nbsp; ▼</div>
+
+  <div class="agents">
+    <div class="card agent doctor">
+      <h3>🌿 Crop Doctor</h3>
+      <div class="role">Diagnoses disease / pests — from text <b>or a photo</b> (Gemini Vision)</div>
+      <ul class="tools">
+        <li>🧩 skill: <b>diagnose_crop</b></li>
+        <li>📷 multimodal leaf-photo</li>
+      </ul>
+      <span class="tag">organic-first · safe remedies</span>
+    </div>
+    <div class="card agent field">
+      <h3>🌦️ Field Advisor</h3>
+      <div class="role">Weather, market prices, soil, what-to-grow, irrigation</div>
+      <ul class="tools">
+        <li>🔌 MCP tools (×5)</li>
+        <li>🧩 skill: <b>plan_irrigation</b></li>
+      </ul>
+      <span class="tag">live + real data</span>
+    </div>
+    <div class="card agent scheme">
+      <h3>🏛️ Scheme Navigator</h3>
+      <div class="role">Finds government schemes: loans, insurance, subsidies</div>
+      <ul class="tools">
+        <li>🧩 skill: <b>find_schemes</b></li>
+      </ul>
+      <span class="tag">official channels only</span>
+    </div>
+  </div>
+  <div class="arrow">▼</div>
+
+  <div class="card mcp">
+    <b>🔌 CUSTOM MCP SERVER</b> (FastMCP over stdio) — reusable by any MCP client
+    <div class="grid">
+      <div>get_weather_forecast</div>
+      <div>get_live_mandi_price</div>
+      <div>get_market_prices</div>
+      <div>get_soil_recommendation</div>
+      <div>recommend_crop</div>
+    </div>
+  </div>
+  <div class="arrow">▼</div>
+
+  <div class="data">
+    <div class="card"><span class="live">● LIVE</span><br/>Open-Meteo<br/><small>weather</small></div>
+    <div class="card"><span class="live">● LIVE</span><br/>data.gov.in<br/><small>Agmarknet mandi</small></div>
+    <div class="card"><b>REAL</b><br/>Crop dataset<br/><small>2,200 rows · k-NN</small></div>
+    <div class="card">PlantVillage<br/><small>disease KB + image</small></div>
+    <div class="card">Govt schemes<br/><small>curated KB</small></div>
+  </div>
+
+  <div class="legend">
+    <span><span class="dot" style="background:#2e7d32"></span>orchestrator</span>
+    <span><span class="dot" style="background:#3d8b40"></span>specialist agents (3)</span>
+    <span><span class="dot" style="background:#124b3c"></span>MCP server</span>
+    <span><span class="dot" style="background:#7a2e2e"></span>security layer</span>
+    <span><span class="dot" style="background:#1d3a2a"></span>data sources</span>
+  </div>
+  <p class="foot">Concepts shown: Multi-agent (ADK) · MCP server · Agent skills · Security · Evaluation &nbsp;|&nbsp; + multimodal · memory · multilingual · web UI &nbsp;|&nbsp; 100% free</p>
+</div>
+</body>
+</html>
