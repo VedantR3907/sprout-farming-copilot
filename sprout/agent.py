@@ -19,7 +19,6 @@ from google.adk.agents import LlmAgent
 
 from sprout.config import GLOBAL_SAFETY_NOTE, MODEL
 from sprout.security.guardrails import apply_guardrails
-from sprout.skills.farmer_profile import get_farmer_profile, save_farmer_profile
 from sprout.sub_agents import crop_doctor, field_advisor, scheme_navigator
 
 root_agent = apply_guardrails(
@@ -38,13 +37,8 @@ root_agent = apply_guardrails(
             "`scheme_navigator`.\n"
             "For greetings or general questions, answer briefly yourself and ask a "
             "clarifying question. After a specialist answers, you may offer one "
-            "relevant follow-up. Keep everything simple, kind, and practical.\n"
-            "When the farmer shares their name, location/district, soil type, or "
-            "crops, call `save_farmer_profile` to remember it. Call "
-            "`get_farmer_profile` to reuse what you already know instead of "
-            "asking again."
+            "relevant follow-up. Keep everything simple, kind, and practical."
         ),
-        tools=[save_farmer_profile, get_farmer_profile],
         sub_agents=[crop_doctor, field_advisor, scheme_navigator],
     )
 )

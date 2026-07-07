@@ -175,13 +175,13 @@ def get_live_mandi_price(commodity: str, state: str = "") -> dict[str, Any]:
 
     records: list[dict] = []
     try:
-        resp = httpx.get(_MANDI_URL, params=params, timeout=12.0)
+        resp = httpx.get(_MANDI_URL, params=params, timeout=4.0)
         resp.raise_for_status()
         records = resp.json().get("records", [])
         # Retry without the state filter if nothing matched in that state.
         if not records and state:
             params.pop("filters[state]", None)
-            resp = httpx.get(_MANDI_URL, params=params, timeout=12.0)
+            resp = httpx.get(_MANDI_URL, params=params, timeout=4.0)
             resp.raise_for_status()
             records = resp.json().get("records", [])
     except Exception as exc:

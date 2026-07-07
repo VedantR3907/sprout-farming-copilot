@@ -95,33 +95,45 @@ async def respond(message: dict, history: list, session_id):
         return history, session_id, None
 
     runner, session_id = await _ensure_session(session_id)
+    message = types.Content(role="user", parts=parts)
 
     final, author = "", ""
-    try:
-        async for event in runner.run_async(
-            user_id=USER,
-            session_id=session_id,
-            new_message=types.Content(role="user", parts=parts),
-        ):
-            if getattr(event, "author", None):
-                author = event.author
-            if event.is_final_response() and event.content and event.content.parts:
-                final = "".join(
-                    p.text for p in event.content.parts if getattr(p, "text", None)
+    # Gemini can occasionally return an empty turn; retry once before giving up.
+    for attempt in range(2):
+        final, author = "", author
+        try:
+            async for event in runner.run_async(
+                user_id=USER, session_id=session_id, new_message=message
+            ):
+                if getattr(event, "author", None):
+                    author = event.author
+                if event.is_final_response() and event.content and event.content.parts:
+                    final = "".join(
+                        p.text for p in event.content.parts if getattr(p, "text", None)
+                    )
+        except Exception as exc:
+            msg = str(exc)
+            if "RESOURCE_EXHAUSTED" in msg or "429" in msg:
+                final = (
+                    "⚠️ The free Gemini quota is momentarily used up (the free tier "
+                    "allows only a few requests per minute/day). Please wait a few "
+                    "seconds and try again."
                 )
-    except Exception as exc:
-        msg = str(exc)
-        if "RESOURCE_EXHAUSTED" in msg or "429" in msg:
-            final = (
-                "⚠️ The free Gemini quota for today is used up (the free tier allows "
-                "only a few requests/day). Please try again later or use a key with "
-                "higher limits."
-            )
-        else:
-            final = f"Sorry, something went wrong: {msg[:200]}"
+            else:
+                final = f"Sorry, something went wrong: {msg[:200]}"
+            break
+        if final.strip():
+            break  # got a real answer
+
+    if not final.strip():
+        final = (
+            "I didn't quite catch that — could you rephrase your question? "
+            "For example: *\"today's onion price in Maharashtra\"* or *\"my wheat "
+            "leaves have yellow spots\"*."
+        )
 
     label = AGENT_LABEL.get(author, "🌱 Sprout")
-    history.append({"role": "assistant", "content": f"**{label}**\n\n{final or '(no response)'}"})
+    history.append({"role": "assistant", "content": f"**{label}**\n\n{final}"})
     return history, session_id, None
 
 
