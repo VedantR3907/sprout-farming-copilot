@@ -154,7 +154,7 @@ Deploy it free (with a public live link) on **Hugging Face Spaces** — see
 
 - **Real multi-agent delegation**, not one prompt — the root agent transfers control
   to the specialist best suited to each question.
-- **A genuine MCP server** that any MCP client (Claude Desktop, other agents) could
+- **A genuine MCP server** that any MCP client (Gemini CLI, other agents) could
   reuse — exposed over stdio with four tools, one backed by **live data** and one by a
   **real Kaggle/HF dataset**.
 - **Skills as first-class, declarative modules** (`AgentSkill` manifests) — discoverable,

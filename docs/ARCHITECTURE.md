@@ -38,7 +38,7 @@ and clarifying questions itself.
 - `field_advisor` consumes the server via ADK's `McpToolset` +
   `StdioConnectionParams` + `StdioServerParameters`, launching it as a subprocess
   and speaking MCP over **stdio**. Because it's a standard MCP server, any other MCP
-  client (e.g. Claude Desktop) could reuse it.
+  client (e.g. the Gemini CLI) could reuse it.
 
 ## 4. Concept 3 — Agent skills
 - `sprout/skills/` holds three reusable capabilities, each a **pure function** plus a
